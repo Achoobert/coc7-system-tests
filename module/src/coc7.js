@@ -39,12 +39,12 @@ Hooks.on('quenchReady', (quench) => {
         this.timeout(30000)
         for (const test of tests) {
           it('Correctly guesses guessNameParts("' + test.test + '")', function () {
-            const parts = CONFIG.Item.documentClasses.skill.guessNameParts(test.test)
-            assert.equal(parts.skillName, test.skillName, 'Skill name does not match')
-            assert.equal(parts.specialization, test.specialization, 'Specialization name does not match')
-            assert.equal(parts.special, test.special, 'Special flag does not match')
-            assert.equal(parts.fighting, test.fighting, 'Fighting flag does not match')
-            assert.equal(parts.firearm, test.firearm, 'Firearm flag does not match')
+            const parts = CONFIG.Item.dataModels.skill.guessNameParts(test.test)
+            assert.equal(parts.system.skillName, test.skillName, 'Skill name does not match')
+            assert.equal(parts.system.specialization, test.specialization, 'Specialization name does not match')
+            assert.equal(parts.system.properties.special, test.special, 'Special flag does not match')
+            assert.equal(parts.system.properties.fighting, test.fighting, 'Fighting flag does not match')
+            assert.equal(parts.system.properties.firearm, test.firearm, 'Firearm flag does not match')
           })
         }
       })
@@ -54,21 +54,21 @@ Hooks.on('quenchReady', (quench) => {
         for (const test of tests) {
           if (test.specialization === '') {
             it('Correctly guesses getNamePartsSpec("' + test.test + '")', function () {
-              const parts = CONFIG.Item.documentClass.getNamePartsSpec(test.test)
+              const parts = CONFIG.Item.dataModels.skill.getNamePartsSpec(test.test)
               assert.equal(parts.name, test.fullName, 'Item name does not match')
               assert.equal(parts.skillName, test.skillName, 'Skill name does not match')
               assert.equal(parts.specialization, test.specialization, 'Specialization name does not match')
             })
           } else {
             it('Correctly guesses getNamePartsSpec("' + test.fullName + '", "' + test.specialization + '")', function () {
-              const parts = CONFIG.Item.documentClass.getNamePartsSpec(test.fullName, test.specialization)
+              const parts = CONFIG.Item.dataModels.skill.getNamePartsSpec(test.fullName, test.specialization)
               assert.equal(parts.name, test.fullName, 'Item name does not match')
               assert.equal(parts.skillName, test.skillName, 'Skill name does not match')
               assert.equal(parts.specialization, test.specialization, 'Specialization name does not match')
             })
           }
           it('Correctly guesses getNamePartsSpec("' + test.test + '", "' + test.specialization + '")', function () {
-            const parts = CONFIG.Item.documentClass.getNamePartsSpec(test.test, test.specialization)
+            const parts = CONFIG.Item.dataModels.skill.getNamePartsSpec(test.test, test.specialization)
             assert.equal(parts.name, test.fullName, 'Item name does not match')
             assert.equal(parts.skillName, test.skillName, 'Skill name does not match')
             assert.equal(parts.specialization, test.specialization, 'Specialization name does not match')
@@ -90,7 +90,7 @@ Hooks.on('quenchReady', (quench) => {
         this.timeout(30000)
         for (const test of tests) {
           it('Correctly creates ' + test.test + ' skill', async function () {
-            const item = await CONFIG.Item.documentClasses.skill.create({ name: test.test, type: 'skill' })
+            const item = await CONFIG.Item.documentClass.create({ name: test.test, type: 'skill' })
             const { name, system: { properties: { special, fighting, firearm }, skillName, specialization } } = item
             assert.equal(name, test.fullName, 'Item name does not match')
             assert.equal(skillName, test.skillName, 'Skill name does not match')
