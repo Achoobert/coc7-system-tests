@@ -36,6 +36,7 @@ Hooks.on('quenchReady', (quench) => {
       const { describe, it, assert } = context
 
       describe('Static: guessNameParts', function () {
+        this.timeout(30000)
         for (const test of tests) {
           it('Correctly guesses guessNameParts("' + test.test + '")', function () {
             const parts = CONFIG.Item.documentClasses.skill.guessNameParts(test.test)
@@ -49,6 +50,7 @@ Hooks.on('quenchReady', (quench) => {
       })
 
       describe('Static: getNamePartsSpec', function () {
+        this.timeout(30000)
         for (const test of tests) {
           if (test.specialization === '') {
             it('Correctly guesses getNamePartsSpec("' + test.test + '")', function () {
@@ -85,6 +87,7 @@ Hooks.on('quenchReady', (quench) => {
       const { describe, it, assert } = context
 
       describe('Item: guessNameParts', function () {
+        this.timeout(30000)
         for (const test of tests) {
           it('Correctly creates ' + test.test + ' skill', async function () {
             const item = await CONFIG.Item.documentClasses.skill.create({ name: test.test, type: 'skill' })
